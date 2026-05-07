@@ -3,7 +3,7 @@ import { LenisProvider } from "@/components/jouel/LenisProvider";
 import { Hero } from "@/components/jouel/Hero";
 import { Philosophy } from "@/components/jouel/Philosophy";
 import { Collection } from "@/components/jouel/Collection";
-import { Story } from "@/components/jouel/Story";
+import { Story } from "@/components/jouel/Story/index";
 import { Finale } from "@/components/jouel/Finale";
 
 export const Route = createFileRoute("/")({
