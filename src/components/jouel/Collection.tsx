@@ -108,6 +108,14 @@ function StickyPiece({
   return (
     <div ref={ref} className="relative h-[210vh] w-full">
       <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
+        {/* Persistent ambient base — never fully fades, ensures no white gap */}
+        <div
+          className="ambient-drift pointer-events-none absolute inset-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(ellipse at 30% 40%, color-mix(in oklab, var(--gold) 5%, transparent), transparent 60%), radial-gradient(ellipse at 70% 70%, color-mix(in oklab, var(--gold-soft) 5%, transparent), transparent 65%)",
+          }}
+        />
         {/* Background haze — drifts in then out */}
         <motion.div
           style={{ opacity: hazeOpacity }}
