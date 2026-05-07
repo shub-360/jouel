@@ -91,9 +91,25 @@ export function Hero() {
               className="h-full w-auto max-w-none object-contain"
               style={{
                 maskImage:
-                  "radial-gradient(ellipse 60% 85% at 50% 55%, black 65%, transparent 100%)",
+                  "radial-gradient(ellipse 62% 92% at 50% 52%, black 28%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.35) 80%, transparent 98%)",
                 WebkitMaskImage:
-                  "radial-gradient(ellipse 60% 85% at 50% 55%, black 65%, transparent 100%)",
+                  "radial-gradient(ellipse 62% 92% at 50% 52%, black 28%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.35) 80%, transparent 98%)",
+              }}
+            />
+            {/* Atmospheric feathering — cream haze diffusing the edges */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse 70% 95% at 50% 52%, transparent 30%, color-mix(in oklab, var(--cream) 35%, transparent) 65%, var(--cream) 100%)",
+              }}
+            />
+            {/* Soft bottom dissolve into cream */}
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
+              style={{
+                background:
+                  "linear-gradient(to bottom, transparent, color-mix(in oklab, var(--cream) 70%, transparent) 60%, var(--cream) 100%)",
               }}
             />
             {/* Reflection sweep across the model */}
