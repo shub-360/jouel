@@ -2,6 +2,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { FloatingParticles } from "./FloatingParticles";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -9,9 +11,10 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const typeY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const videoY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const typeY = useTransform(scrollYProgress, [0, 1], [0, -180]);
+  const typeScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const videoY = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
 
   return (
     <section
@@ -19,12 +22,21 @@ export function Hero() {
       className="relative min-h-[100svh] w-full overflow-hidden vignette"
       aria-label="JOUEL — entering the world"
     >
-      {/* Ambient glow */}
+      {/* Background ambient drift */}
+      <div
+        className="ambient-drift pointer-events-none absolute inset-0 opacity-70"
+        style={{
+          background:
+            "radial-gradient(ellipse at 30% 40%, color-mix(in oklab, var(--gold) 9%, transparent), transparent 55%), radial-gradient(ellipse at 70% 70%, color-mix(in oklab, var(--gold) 7%, transparent), transparent 60%)",
+        }}
+      />
+
+      {/* Soft centered glow */}
       <div
         className="ambient-glow pointer-events-none absolute left-1/2 top-1/2 h-[80vmin] w-[80vmin] rounded-full"
         style={{
           background:
-            "radial-gradient(circle, color-mix(in oklab, var(--gold) 18%, transparent) 0%, transparent 65%)",
+            "radial-gradient(circle, color-mix(in oklab, var(--gold) 16%, transparent) 0%, transparent 65%)",
         }}
       />
 
@@ -32,69 +44,70 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-30 flex items-center justify-between px-6 pt-6 md:px-12 md:pt-10"
+        transition={{ duration: 1.4, delay: 0.2, ease }}
+        className="relative z-40 flex items-center justify-between px-6 pt-6 md:px-12 md:pt-10"
       >
         <span className="text-eyebrow text-foreground/70">Jouel — Atelier</span>
         <span className="text-eyebrow text-foreground/70">[ Since 2017 ]</span>
       </motion.div>
 
-      {/* Oversized split typography behind model */}
-      <motion.div
-        style={{ y: typeY, opacity: fade }}
-        className="pointer-events-none absolute inset-x-0 top-[8vh] z-10 flex items-start justify-between px-2 md:top-[6vh] md:px-6"
-      >
-        <motion.span
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-          className="font-display block leading-[0.82] text-foreground"
-          style={{ fontSize: "clamp(7rem, 24vw, 24rem)" }}
+      {/* Cinematic camera drift wraps the central composition */}
+      <div className="camera-drift absolute inset-0">
+        {/* Massive single JOUEL wordmark behind model */}
+        <motion.div
+          style={{ y: typeY, opacity: fade, scale: typeScale }}
+          className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
         >
-          Jou
-        </motion.span>
-        <motion.span
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 2, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
-          className="font-display block leading-[0.82] text-foreground"
-          style={{ fontSize: "clamp(7rem, 24vw, 24rem)" }}
-        >
-          el
-        </motion.span>
-      </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, letterSpacing: "0.02em" }}
+            animate={{ opacity: 1, letterSpacing: "-0.045em" }}
+            transition={{ duration: 2.4, ease, delay: 0.3 }}
+            className="font-grotesk select-none whitespace-nowrap text-foreground"
+            style={{
+              fontSize: "clamp(7rem, 28vw, 26rem)",
+              lineHeight: 0.82,
+            }}
+          >
+            JOUEL
+          </motion.h1>
+        </motion.div>
 
-      {/* Centered video model */}
-      <motion.div
-        style={{ y: videoY }}
-        initial={{ opacity: 0, scale: 1.04 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 2.4, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-        className="absolute inset-0 z-20 flex items-end justify-center"
-      >
-        <video
-          src="/jouel-model.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="h-[88vh] w-auto max-w-none object-contain"
-          style={{
-            maskImage:
-              "radial-gradient(ellipse 70% 90% at 50% 55%, black 70%, transparent 100%)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse 70% 90% at 50% 55%, black 70%, transparent 100%)",
-          }}
-        />
-      </motion.div>
+        {/* Centered model video */}
+        <motion.div
+          style={{ y: videoY }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 2.4, ease, delay: 0.4 }}
+          className="absolute inset-0 z-20 flex items-end justify-center"
+        >
+          <div className="breathe relative h-[92vh] w-auto">
+            <video
+              src="/jouel-model.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="h-full w-auto max-w-none object-contain"
+              style={{
+                maskImage:
+                  "radial-gradient(ellipse 60% 85% at 50% 55%, black 65%, transparent 100%)",
+                WebkitMaskImage:
+                  "radial-gradient(ellipse 60% 85% at 50% 55%, black 65%, transparent 100%)",
+              }}
+            />
+            {/* Reflection sweep across the model */}
+            <div className="reflection-sweep" />
+          </div>
+        </motion.div>
+      </div>
 
       {/* Side editorial copy */}
       <motion.aside
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.6, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute left-6 top-[34vh] z-30 hidden max-w-[18rem] md:left-12 md:block"
+        transition={{ duration: 1.6, delay: 1.2, ease }}
+        className="absolute left-6 top-[36vh] z-30 hidden max-w-[18rem] md:left-12 md:block"
       >
         <p className="font-sans text-[13px] leading-relaxed text-foreground/75">
           Each design reflects the dialogue between craftsmanship and feeling —
@@ -105,8 +118,8 @@ export function Hero() {
       <motion.aside
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.6, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute right-6 top-[34vh] z-30 hidden text-right md:right-12 md:block"
+        transition={{ duration: 1.6, delay: 1.4, ease }}
+        className="absolute right-6 top-[36vh] z-30 hidden text-right md:right-12 md:block"
       >
         <span className="text-eyebrow text-foreground/60">Volume I</span>
         <p className="mt-3 font-display text-2xl text-foreground">
@@ -116,7 +129,7 @@ export function Hero() {
         </p>
       </motion.aside>
 
-      {/* Foreground floating particles */}
+      {/* Foreground particles */}
       <div className="absolute inset-0 z-30">
         <FloatingParticles />
       </div>
@@ -125,7 +138,7 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.6, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.6, delay: 1.6, ease }}
         className="absolute inset-x-0 bottom-6 z-30 flex items-end justify-between gap-3 px-4 md:bottom-10 md:gap-8 md:px-12"
       >
         <EditorialCard tag="New Collection" subtitle="[ 2026 ]" align="left" />
@@ -133,7 +146,6 @@ export function Hero() {
         <EditorialCard tag="Coco Crush ring" subtitle="[ 18K yellow ]" align="right" arrow />
       </motion.div>
 
-      {/* Scroll hint */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
