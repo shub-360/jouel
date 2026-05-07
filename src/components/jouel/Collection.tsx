@@ -47,7 +47,7 @@ export function Collection() {
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-20%" }}
+          viewport={{ once: true, margin: "0px 0px -25% 0px" }}
           transition={{ duration: 1.6, ease }}
           className="font-display mt-10 leading-[0.95] text-foreground"
           style={{ fontSize: "clamp(2.25rem, 5.5vw, 5.5rem)" }}
@@ -76,37 +76,46 @@ function StickyPiece({
     offset: ["start start", "end end"],
   });
 
-  // Phase A (0–0.25): atmosphere — word fades in
-  // Phase B (0.20–0.55): jewelry scales/fades in
-  // Phase C (0.50–0.80): caption slides in, shimmer
-  // Phase D (0.85–1.0): everything fades out
-  const wordOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
-  const wordY = useTransform(scrollYProgress, [0, 1], [120, -120]);
-  const wordScale = useTransform(scrollYProgress, [0, 1], [1.05, 0.95]);
+  // Tightened timeline — atmosphere active across full 0→1 range, no dead zones.
+  // Word: enters early, lingers, fades only at the very end.
+  const wordOpacity = useTransform(scrollYProgress, [0, 0.06, 0.94, 1], [0, 1, 1, 0]);
+  const wordY = useTransform(scrollYProgress, [0, 1], [140, -140]);
+  const wordScale = useTransform(scrollYProgress, [0, 1], [1.06, 0.94]);
 
-  const imgOpacity = useTransform(scrollYProgress, [0.18, 0.45, 0.85, 1], [0, 1, 1, 0]);
-  const imgScale = useTransform(scrollYProgress, [0.18, 0.55], [1.18, 1]);
-  const imgY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  // Image: present nearly the whole scene, with continuous slow drift.
+  const imgOpacity = useTransform(scrollYProgress, [0.05, 0.22, 0.88, 1], [0, 1, 1, 0]);
+  const imgScale = useTransform(scrollYProgress, [0.05, 0.5, 1], [1.18, 1, 0.98]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [80, -80]);
 
+  // Caption: anticipatory entry — appears as element nears focus, holds long.
   const captionOpacity = useTransform(
     scrollYProgress,
-    [0.5, 0.65, 0.85, 1],
+    [0.18, 0.35, 0.9, 1],
     [0, 1, 1, 0],
   );
-  const captionY = useTransform(scrollYProgress, [0.5, 0.65], [40, 0]);
+  const captionY = useTransform(scrollYProgress, [0.18, 0.4], [40, 0]);
 
+  // Haze: never fully fades during the scene — atmospheric continuity.
   const hazeOpacity = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    [0, 0.6, 0.6, 0],
+    [0, 0.15, 0.95, 1],
+    [0.25, 0.7, 0.6, 0.2],
   );
 
   const isOdd = index % 2 === 1;
   const dramatic = piece.dramatic;
 
   return (
-    <div ref={ref} className="relative h-[300vh] w-full">
+    <div ref={ref} className="relative h-[210vh] w-full">
       <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
+        {/* Persistent ambient base — never fully fades, ensures no white gap */}
+        <div
+          className="ambient-drift pointer-events-none absolute inset-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(ellipse at 30% 40%, color-mix(in oklab, var(--gold) 5%, transparent), transparent 60%), radial-gradient(ellipse at 70% 70%, color-mix(in oklab, var(--gold-soft) 5%, transparent), transparent 65%)",
+          }}
+        />
         {/* Background haze — drifts in then out */}
         <motion.div
           style={{ opacity: hazeOpacity }}

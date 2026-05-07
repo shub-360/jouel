@@ -43,7 +43,7 @@ export function CraftScene() {
         <motion.h3
           initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0)" }}
-          viewport={{ once: true, margin: "-15%" }}
+          viewport={{ once: true, margin: "0px 0px -25% 0px" }}
           transition={{ duration: 2, ease, delay: 0.2 }}
           className="font-display mt-10 max-w-3xl leading-[1.05] text-cream"
           style={{ fontSize: "clamp(2rem, 4.5vw, 4.5rem)" }}
@@ -65,7 +65,7 @@ export function CraftScene() {
             style={{ y: imgY }}
             initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
             whileInView={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
-            viewport={{ once: true, margin: "-15%" }}
+            viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 1.8, ease }}
             className="col-span-12 md:col-span-5 md:col-start-7"
           >
@@ -87,7 +87,7 @@ export function CraftScene() {
             style={{ y: swatchY }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-15%" }}
+            viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 1.6, ease, delay: 0.6 }}
             className="col-span-12 mt-16 flex flex-wrap gap-4 md:col-span-8 md:col-start-3 md:mt-32"
           >

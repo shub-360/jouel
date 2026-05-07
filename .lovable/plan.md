@@ -1,197 +1,66 @@
-## JOUEL — Cinematic Refinement Plan
+## JOUEL — Cinematic Continuity Pass
 
-Transform the current static editorial layout into a directed cinematic experience. Four focused rebuilds: Hero, Phase 2 (Philosophy), Phase 3 (Collection), Storytelling. No new routes, no backend — pure presentation work in `src/components/jouel/` and `src/styles.css`.
-
----
-
-### 1. Typography system update
-
-Add a bold grotesk for hero/display impact, keep Instrument Serif for emotional/poetic text only.
-
-- Add **Inter Tight** (weights 700/900) via Google Fonts in `__root.tsx` (closest free Satoshi/General Sans alternative — no extra dep, no licensing risk).
-- New CSS tokens in `src/styles.css`:
-  - `--font-grotesk: "Inter Tight", system-ui, sans-serif`
-  - `.font-grotesk` utility, tighter tracking (-0.04em), weight 900
-- Rule: grotesk = hero + collection scale typography; serif = philosophy pull-quotes, story verses, finale.
+Four targeted fixes to remove dead scroll, soften the hero model, tighten reveal pacing, and keep atmosphere alive between scenes. No new dependencies, no creative-direction changes.
 
 ---
 
-### 2. Hero — full rebuild (`Hero.tsx`)
+### 1. Collection — kill dead scroll, keep atmosphere alive
 
-Recompose from split "Jou | el" into a single dominant centered "JOUEL" wordmark behind the model.
+**File:** `src/components/jouel/Collection.tsx`
 
-```text
-┌─────────────────────────────────────────────┐
-│  [eyebrow left]              [eyebrow right]│
-│                                              │
-│            J O U E L     ← grotesk, ~28vw   │
-│              ▓▓▓▓                            │
-│              ▓██▓        ← model video     │
-│              ▓██▓           overlaps & masks│
-│              ▓██▓           the typography  │
-│                                              │
-│  [philosophy copy]      [Volume I caption]  │
-│  ─────────  ─────────  ─────────            │
-│  [card]     [card]     [card]               │
-└─────────────────────────────────────────────┘
-```
+- Reduce sticky height per piece: `h-[300vh]` → `h-[220vh]` so scenes don't outlast their content.
+- Rewrite transform timelines so something is always moving/visible across the full 0→1 range:
+  - `wordOpacity`: `[0, 0.08, 0.92, 1] → [0, 1, 1, 0]` (in earlier, out later)
+  - `imgOpacity`: `[0.05, 0.25, 0.85, 1] → [0, 1, 1, 0]` (image present nearly the whole scene)
+  - `captionOpacity`: `[0.25, 0.4, 0.9, 1] → [0, 1, 1, 0]` (no late entry)
+  - `hazeOpacity`: `[0, 0.15, 0.95, 1] → [0, 0.7, 0.7, 0]` (atmosphere holds full duration)
+- Add a persistent ambient layer behind every sticky piece (very low-opacity gold radial + grain) that never fully fades, so transitions between pieces never go fully blank.
+- Add a continuous slow `y` drift to the jewelry image even at scene midpoint (extend `imgY` range slightly) so nothing feels frozen.
 
-Layer stack (back → front):
+### 2. Hero — soft atmospheric model blend  
+Add extremely subtle atmospheric depth behind the model silhouette using a soft blurred shadow diffusion rather than a standard drop shadow.
 
-1. Cream background + grain + radial vignette
-2. Slow ambient gold glow drift (CSS keyframe, 20s)
-3. **Single "JOUEL"** wordmark — Inter Tight 900, ~28vw, centered, parallax y on scroll, slight letter-spacing breathing
-4. **Model video** — centered, height 92vh, soft radial mask blending into cream; subtle idle scale (1 → 1.01 → 1, 8s loop) to add "breathing"  
-Add extremely subtle cinematic camera drift to the entire hero composition.
-  The hero container should slowly shift position over time:
-  - slight translateY movement
-  - minimal perspective drift
-  - almost imperceptible motion
-  This should create the feeling that the scene is quietly breathing like a cinematic fashion film frame.
-  Movement must remain extremely restrained and atmospheric.
-5. Reflection sweep: a thin diagonal gold gradient that drifts across the model area every ~12s
-6. Foreground particles (existing `FloatingParticles`, reduced count for restraint)
-7. Editorial side captions + bottom 3 cards (kept, polished spacing)
+The goal is to create cinematic separation from the background while maintaining softness and luxury restraint.
 
-Masking technique: model sits in front of typography naturally because z-index — no manual cutout needed; the radial mask on the video edges blends it into the cream so the wordmark reads through softly at top/bottom.
+**File:** `src/components/jouel/Hero.tsx`
 
----
+- Remove the hard rectangular video edge. Strengthen the existing `mask-image` with a wider, softer radial:
+  - `radial-gradient(ellipse 70% 95% at 50% 55%, black 35%, transparent 95%)`
+  - Add a second vertical fade layer (mask-composite) so the bottom of the model dissolves into cream instead of cutting.
+- Wrap the video in an extra atmospheric layer: a cream→transparent radial overlay sitting on top of the video edges (additive feathering) to diffuse any remaining hard pixels.
+- Keep the giant `JOUEL` wordmark on z-10 and the video on z-20, but lower video contrast at the edges via the mask so type bleeds through the silhouette outline.
+- Confirm `mix-blend-mode: multiply` is NOT introduced (would dirty the cream); rely purely on masking + radial fade.
 
-### 3. Phase 2 — Philosophy & Craftsmanship rebuild (`Philosophy.tsx`)
+### 3. Reveal pacing — anticipatory, not reactive
 
-From two-column editorial → layered archive composition.
+**Files:** `Collection.tsx`, `Philosophy.tsx`, `Story/OriginScene.tsx`, `Story/CraftScene.tsx`, `Story/MemoryScene.tsx`, `Finale.tsx`
 
-- Sticky-ish container with overlapping floating elements at different scroll speeds.
-- 3 macro craft images positioned asymmetrically (not in a grid), each with its own parallax y-offset and a cinematic mask reveal (clip-path inset animating from 100% → 0%).
-- Floating "museum label" cards (small bordered cream panels) drifting in with stagger — material name, year, atelier number.
-- Oversized serif pull-quote crossing the composition diagonally, revealed word-by-word with blur-to-focus (`filter: blur(12px) → blur(0)` + opacity).
-- Subtle SVG gold "sculptural fragments" (thin arcs, dots) that drift slowly in the background — pure SVG + framer-motion, no 3D dependency. Keeps "sculptural assembly" feel without WebGL weight.  
-Add one iconic sculptural centerpiece moment within the philosophy section.
-  This should become the emotional and visual focal point of the craftsmanship experience.
-  Examples:
-  - floating jewelry sculpture
-  - slowly assembling gold framework
-  - gemstone alignment composition
-  - sculptural luxury object reveal
-  The motion should feel:
-  - artistic
-  - architectural
-  - cinematic
-  - handcrafted
-  Avoid:
-  - robotic assembly
-  - sci-fi behavior
-  - aggressive animation
-  This centerpiece should feel like a museum installation or luxury sculpture coming to life.
-- Decision: **no Three.js / R3F**. Adds bundle weight and breaks the restraint principle. SVG + transforms achieve the same atmosphere.  
-One centerpiece:
-  - floating jewelry sculpture
-  - slow assembly
-  - cinematic reveal
-  - elegant gold framework
-  Could even be:  
-  SVG-driven.
-  But there should be:
-  # one iconic motion moment.
-  Otherwise the section risks becoming:  
-  “beautiful floating cards.”
+- Standardize `whileInView` viewport margin from `-15%` / `-20%` to `-25%` (top) / `0%` (bottom) so reveals trigger before the element reaches viewport center.
+- Where `useScroll` drives reveals (Collection captions), shift the start of opacity ramps 10–15% earlier (covered in §1).
+- Slightly shorten reveal durations (2.0s → 1.4s) on body text/captions so they finish near focus position, while keeping hero/quote durations long for gravitas.  
+Introduce subtle overlap transitions between exhibition pieces so the next atmosphere begins appearing before the previous scene fully exits.
+  Avoid hard visual separation between collection moments.
+
+### 4. Atmospheric continuity between scenes
+
+**Files:** `src/styles.css`, `src/routes/index.tsx` (or a new `AmbientField.tsx` mounted once)
+
+- Add a single fixed-position ambient field behind the entire page: very subtle cream/gold radial gradient + grain at ~6% opacity, `position: fixed; inset: 0; z-index: 0; pointer-events: none;`. Sections sit on transparent or near-transparent backgrounds so the field shows through during transitions.
+- Add a reusable `.ghost-type` utility in `styles.css`: oversized grotesk word, opacity ~0.04, that scenes can drop into their negative space (e.g., faint "ATELIER" / "CRAFT" / "MEMORY" floating in margins) — keeps whitespace emotionally alive without crowding.
+- Add `@keyframes haze-drift` (already partially present as `ambient-drift`) confirmed slow (40s+) and apply to the global field so motion never stops.  
+Atmospheric movement should continue subtly across section boundaries so scenes feel emotionally connected.
+  Light diffusion, haze drift, and background motion should overlap slightly between transitions to create cinematic continuity rather than isolated section changes.
 
 ---
 
-### 4. Phase 3 — Collection sticky cinematic exhibition (`Collection.tsx`)
+### Out of scope
 
-This is the biggest change. Replace the current three scroll-past panels with a **sticky-scroll exhibition** where each piece holds the viewport for ~150vh of scroll.
+- No new sections, no copy changes, no image regeneration.
+- No new dependencies. All work in existing components + `styles.css`.
 
-Pattern (per piece):
+### Verification
 
-```text
-section height: 200vh
-  └─ sticky inner (h-screen, top-0)
-       ├─ phase A (0–25%):  atmosphere builds — giant word fades in, bg drifts
-       ├─ phase B (25–60%): jewelry image scales from 1.15 → 1, opacity 0 → 1
-       ├─ phase C (60–85%): caption + label slide in, shimmer sweep plays
-       └─ phase D (85–100%): everything gently fades / scales out → next piece
-```
-
-- Drive all phases with a single `useScroll` per piece + `useTransform` ranges. No Lenis fighting required.
-- Dramatic scale: jewelry image small (max 40vh), giant word massive (~30vw), microscopic label (10px tracking-wide).  
-Introduce one dramatic scale-contrast moment within the collection sequence.
-  Most jewelry pieces should remain small and isolated within large whitespace.
-  However, one selected exhibition piece should temporarily become unexpectedly dominant in scale:
-  - larger jewelry composition
-  - stronger cinematic focus
-  - intensified atmosphere
-  - emotional visual impact
-  This creates editorial rhythm and prevents the showcase pacing from becoming visually repetitive.
-- Layered parallax: word (slowest) ← bg haze ← jewelry (medium) ← label (fastest).
-- Per-piece subtle idle motion on jewelry: y oscillation ±6px, 6s loop; gold sweep `::after` every 8s.
-- Intro panel ("Three pieces, held in light.") kept as-is before the sticky pieces begin.
-
----
-
-### 5. Storytelling — three layered scenes (replace single `Story.tsx`)
-
-Split `Story.tsx` into a `Story/` folder with three scenes, composed sequentially:
-
-- **Scene 1 — Origin** (`OriginScene.tsx`): cream textured board, macro jewelry image off-center, handwritten-style serif quote (Instrument Serif italic), 2–3 floating label cards drifting in, ambient grain. Quiet/intimate.
-- **Scene 2 — Craftsmanship** (`CraftScene.tsx`): dark archive composition. Layered: macro workshop image, floating SVG gold sketches (hand-drawn arcs), small material swatches as cards, oversized typography overlay. Feels like a moodboard.
-- **Scene 3 — Memory** (`MemoryScene.tsx`): keeps the existing cinematic full-bleed portrait + parallax + verse reveals (the current Story.tsx is closest to this — refine it, don't discard). Add stronger ambient light drift, slower verse pacing.
-
-Transitions between scenes: full-bleed cream/charcoal blends (sticky cross-fade panels) so scenes feel like cinematic cuts, not adjacent sections.  
-Maintain emotional silence and restraint throughout the storytelling scenes.Do not overcrowd compositions with excessive floating elements, textures, or motion.Some moments should intentionally feel: still, quiet ,spacious ,emotionally suspended
-
-The storytelling experience should breathe cinematically rather than constantly demanding attention.
-
----
-
-### 6. Motion system additions (`src/styles.css`)
-
-- `@keyframes ambient-drift` — slow background gradient movement (20s)
-- `@keyframes reflection-sweep` — diagonal gold gradient pass (12s, infinite)
-- `@keyframes breathe` — scale 1 → 1.01 → 1 (8s)
-- `.blur-reveal` utility class for blur-to-focus text reveals
-- All motion respects `prefers-reduced-motion` (already wired in Lenis provider; extend to CSS keyframes via media query).
-
----
-
-### 7. Files
-
-**New:**
-
-- `src/components/jouel/Story/OriginScene.tsx`
-- `src/components/jouel/Story/CraftScene.tsx`
-- `src/components/jouel/Story/MemoryScene.tsx`
-- `src/components/jouel/Story/index.tsx` (composes the three)
-- `src/components/jouel/SculpturalFragments.tsx` (SVG gold drift elements, reusable)
-
-**Rewritten:**
-
-- `src/components/jouel/Hero.tsx` — single centered wordmark + cinematic layers
-- `src/components/jouel/Philosophy.tsx` — layered archive composition
-- `src/components/jouel/Collection.tsx` — sticky-scroll exhibition pattern
-
-**Edited:**
-
-- `src/styles.css` — grotesk font tokens, new keyframes, blur-reveal utility
-- `src/routes/__root.tsx` — add Inter Tight to Google Fonts link
-- `src/routes/index.tsx` — swap `Story` import for new `Story/index.tsx`
-
-**No new dependencies.** Framer Motion + Lenis already cover everything; SVG handles "sculptural" elements without 3D weight.
-
----
-
-### 8. Guardrails honored
-
-- Restraint over spectacle: reduce particle counts, single ambient glow per scene, one shimmer pass at a time.
-- Depth via foreground/midground/background layering on every scene.  
-The overall website should feel like a directed cinematic sequence rather than independent stacked sections.
-  Transitions between scenes should emotionally flow through:
-  - atmosphere
-  - pacing
-  - lighting continuity
-  - layered motion
-  - cinematic breathing space
-  The experience should feel:
-  inhale → reveal → drift → focus → silence.
-- No SaaS patterns, no loud accents — gold stays as 18% opacity ambient only.
-- All durations 1.4–2.4s with ease `[0.22, 1, 0.36, 1]`.
+- Scroll through Collection: confirm no white gap between pieces, image visible >70% of each sticky duration.
+- Hero: model edges feather into cream, JOUEL letters readable behind silhouette.
+- Reveal triggers: text appears as element enters lower viewport, fully readable at center.
+- Between sections: faint ambient warmth always present, never pure flat white.

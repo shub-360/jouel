@@ -230,8 +230,38 @@
     50% { background-position: 100% 50%; }
   }
   .ambient-drift {
-    background-size: 200% 200%;
-    animation: ambient-drift 22s ease-in-out infinite;
+    background-size: 220% 220%;
+    animation: ambient-drift 42s ease-in-out infinite;
+  }
+
+  /* Global ambient field — fixed, sits behind every section */
+  .ambient-field {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 22% 28%, color-mix(in oklab, var(--gold) 9%, transparent), transparent 60%),
+      radial-gradient(ellipse 55% 50% at 78% 72%, color-mix(in oklab, var(--gold) 7%, transparent), transparent 60%),
+      radial-gradient(ellipse 80% 80% at 50% 50%, color-mix(in oklab, var(--gold-soft) 5%, transparent), transparent 70%);
+    background-size: 220% 220%;
+    animation: ambient-drift 60s ease-in-out infinite;
+    opacity: 0.85;
+  }
+
+  /* Ghost typography — oversized faint grotesk word for empty negative space */
+  .ghost-type {
+    font-family: var(--font-grotesk);
+    font-weight: 900;
+    letter-spacing: -0.045em;
+    line-height: 0.82;
+    color: color-mix(in oklab, var(--charcoal) 5%, transparent);
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .ghost-type.on-dark {
+    color: color-mix(in oklab, var(--cream) 5%, transparent);
   }
 
   /* Blur-to-focus reveal helper (used with framer-motion) */
