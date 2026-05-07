@@ -7,6 +7,7 @@
 @theme inline {
   --font-display: "Instrument Serif", ui-serif, Georgia, serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-grotesk: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -177,6 +178,65 @@
   .ambient-glow {
     animation: ambient-glow 12s ease-in-out infinite;
   }
+
+  .font-grotesk {
+    font-family: var(--font-grotesk);
+    font-weight: 900;
+    letter-spacing: -0.045em;
+  }
+
+  /* Cinematic camera drift */
+  @keyframes camera-drift {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -8px, 0); }
+  }
+  .camera-drift {
+    animation: camera-drift 14s ease-in-out infinite;
+  }
+
+  /* Subtle breathing scale */
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.012); }
+  }
+  .breathe {
+    animation: breathe 9s ease-in-out infinite;
+  }
+
+  /* Reflection sweep — diagonal gold pass */
+  @keyframes reflection-sweep {
+    0% { transform: translateX(-120%) skewX(-12deg); opacity: 0; }
+    25% { opacity: 0.5; }
+    60% { opacity: 0.5; }
+    100% { transform: translateX(120%) skewX(-12deg); opacity: 0; }
+  }
+  .reflection-sweep {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      100deg,
+      transparent 40%,
+      color-mix(in oklab, var(--gold) 22%, transparent) 50%,
+      transparent 60%
+    );
+    animation: reflection-sweep 12s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+
+  /* Ambient slow drift for backgrounds */
+  @keyframes ambient-drift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .ambient-drift {
+    background-size: 200% 200%;
+    animation: ambient-drift 22s ease-in-out infinite;
+  }
+
+  /* Blur-to-focus reveal helper (used with framer-motion) */
+  .blur-reveal { filter: blur(12px); opacity: 0; }
+  .blur-reveal.in { filter: blur(0); opacity: 1; transition: filter 1.6s cubic-bezier(0.22,1,0.36,1), opacity 1.6s cubic-bezier(0.22,1,0.36,1); }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
