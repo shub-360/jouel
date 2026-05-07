@@ -76,29 +76,30 @@ function StickyPiece({
     offset: ["start start", "end end"],
   });
 
-  // Phase A (0–0.25): atmosphere — word fades in
-  // Phase B (0.20–0.55): jewelry scales/fades in
-  // Phase C (0.50–0.80): caption slides in, shimmer
-  // Phase D (0.85–1.0): everything fades out
-  const wordOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
-  const wordY = useTransform(scrollYProgress, [0, 1], [120, -120]);
-  const wordScale = useTransform(scrollYProgress, [0, 1], [1.05, 0.95]);
+  // Tightened timeline — atmosphere active across full 0→1 range, no dead zones.
+  // Word: enters early, lingers, fades only at the very end.
+  const wordOpacity = useTransform(scrollYProgress, [0, 0.06, 0.94, 1], [0, 1, 1, 0]);
+  const wordY = useTransform(scrollYProgress, [0, 1], [140, -140]);
+  const wordScale = useTransform(scrollYProgress, [0, 1], [1.06, 0.94]);
 
-  const imgOpacity = useTransform(scrollYProgress, [0.18, 0.45, 0.85, 1], [0, 1, 1, 0]);
-  const imgScale = useTransform(scrollYProgress, [0.18, 0.55], [1.18, 1]);
-  const imgY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  // Image: present nearly the whole scene, with continuous slow drift.
+  const imgOpacity = useTransform(scrollYProgress, [0.05, 0.22, 0.88, 1], [0, 1, 1, 0]);
+  const imgScale = useTransform(scrollYProgress, [0.05, 0.5, 1], [1.18, 1, 0.98]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [80, -80]);
 
+  // Caption: anticipatory entry — appears as element nears focus, holds long.
   const captionOpacity = useTransform(
     scrollYProgress,
-    [0.5, 0.65, 0.85, 1],
+    [0.18, 0.35, 0.9, 1],
     [0, 1, 1, 0],
   );
-  const captionY = useTransform(scrollYProgress, [0.5, 0.65], [40, 0]);
+  const captionY = useTransform(scrollYProgress, [0.18, 0.4], [40, 0]);
 
+  // Haze: never fully fades during the scene — atmospheric continuity.
   const hazeOpacity = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    [0, 0.6, 0.6, 0],
+    [0, 0.15, 0.95, 1],
+    [0.25, 0.7, 0.6, 0.2],
   );
 
   const isOdd = index % 2 === 1;
