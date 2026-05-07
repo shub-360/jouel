@@ -5,6 +5,15 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export function Finale() {
   return (
     <section className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-background px-6 py-24">
+      {/* Ghost typography in negative space */}
+      <span
+        className="ghost-type pointer-events-none absolute left-1/2 top-[18%] -translate-x-1/2 select-none"
+        style={{ fontSize: "clamp(6rem, 22vw, 22rem)" }}
+        aria-hidden
+      >
+        JOUEL
+      </span>
+
       {/* Soft ambient glow */}
       <div
         className="ambient-glow pointer-events-none absolute left-1/2 top-1/2 h-[60vmin] w-[60vmin] rounded-full"
