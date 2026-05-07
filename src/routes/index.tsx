@@ -31,6 +31,8 @@ function Index() {
   return (
     <LenisProvider>
       <main className="grain relative min-h-screen w-full overflow-x-hidden bg-background text-foreground">
+        {/* Global ambient field — keeps whitespace alive between scenes */}
+        <div className="ambient-field" aria-hidden />
         <Hero />
         <Philosophy />
         <Collection />
