@@ -28,7 +28,7 @@ export function Philosophy() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-20%" }}
+          viewport={{ once: true, margin: "0px 0px -25% 0px" }}
           transition={{ duration: 1.4, ease }}
           className="flex items-center justify-between"
         >
@@ -46,7 +46,7 @@ export function Philosophy() {
               key={i}
               initial={{ opacity: 0, y: 30, filter: "blur(14px)" }}
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, margin: "-15%" }}
+              viewport={{ once: true, margin: "0px 0px -25% 0px" }}
               transition={{ duration: 1.6, ease, delay: i * 0.12 }}
               className={`mr-[0.25em] inline-block ${
                 i === 3 || i === 4 ? "italic text-foreground/65" : ""
@@ -66,7 +66,7 @@ export function Philosophy() {
             style={{ y: img1Y }}
             initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
             whileInView={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
-            viewport={{ once: true, margin: "-10%" }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
             transition={{ duration: 1.8, ease }}
             className="col-span-12 md:col-span-5 md:col-start-1"
           >
@@ -92,7 +92,7 @@ export function Philosophy() {
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
+              viewport={{ once: true, margin: "0px 0px -20% 0px" }}
               transition={{ duration: 1.6, ease }}
               className="font-display text-2xl leading-snug text-foreground md:text-3xl"
             >
@@ -104,7 +104,7 @@ export function Philosophy() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
+              viewport={{ once: true, margin: "0px 0px -20% 0px" }}
               transition={{ duration: 1.4, ease, delay: 0.3 }}
               className="mt-10 inline-block rounded-sm border border-foreground/15 bg-card/70 px-5 py-4 backdrop-blur-sm"
             >
@@ -117,7 +117,7 @@ export function Philosophy() {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
+              viewport={{ once: true, margin: "0px 0px -20% 0px" }}
               transition={{ duration: 1.4, ease, delay: 0.5 }}
               className="mt-6 ml-12 inline-block rounded-sm border border-foreground/15 bg-card/70 px-5 py-4 backdrop-blur-sm"
             >
@@ -137,7 +137,7 @@ export function Philosophy() {
           <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-10%" }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
             transition={{ duration: 1.6, ease }}
             className="text-eyebrow text-foreground/50"
           >
@@ -147,7 +147,7 @@ export function Philosophy() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px" }}
             transition={{ duration: 1.6, ease, delay: 1.6 }}
             className="mt-6 max-w-md text-center font-sans text-sm leading-relaxed text-foreground/70"
           >
@@ -161,7 +161,7 @@ export function Philosophy() {
           style={{ y: img2Y }}
           initial={{ opacity: 0, clipPath: "inset(100% 0 0 0)" }}
           whileInView={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
-          viewport={{ once: true, margin: "-10%" }}
+          viewport={{ once: true, margin: "0px 0px -20% 0px" }}
           transition={{ duration: 1.8, ease, delay: 0.2 }}
           className="mx-auto mt-40 grid grid-cols-12 gap-6"
         >

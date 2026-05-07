@@ -36,7 +36,7 @@ export function OriginScene() {
             style={{ y: imgY }}
             initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
             whileInView={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
-            viewport={{ once: true, margin: "-15%" }}
+            viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 2, ease }}
             className="col-span-12 md:col-span-6 md:col-start-2"
           >
@@ -54,7 +54,7 @@ export function OriginScene() {
           <motion.blockquote
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-15%" }}
+            viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 1.8, ease, delay: 0.4 }}
             className="col-span-12 self-end md:col-span-4 md:col-start-9"
           >
@@ -75,7 +75,7 @@ export function OriginScene() {
             style={{ y: card1Y }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-15%" }}
+            viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 1.6, ease, delay: 0.6 }}
             className="col-span-12 mt-12 md:col-span-3 md:col-start-1 md:mt-24"
           >
@@ -91,7 +91,7 @@ export function OriginScene() {
             style={{ y: card2Y }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-15%" }}
+            viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 1.6, ease, delay: 0.8 }}
             className="col-span-12 md:col-span-3 md:col-start-9"
           >

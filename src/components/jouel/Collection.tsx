@@ -47,7 +47,7 @@ export function Collection() {
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-20%" }}
+          viewport={{ once: true, margin: "0px 0px -25% 0px" }}
           transition={{ duration: 1.6, ease }}
           className="font-display mt-10 leading-[0.95] text-foreground"
           style={{ fontSize: "clamp(2.25rem, 5.5vw, 5.5rem)" }}
