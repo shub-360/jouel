@@ -106,7 +106,7 @@ function StickyPiece({
   const dramatic = piece.dramatic;
 
   return (
-    <div ref={ref} className="relative h-[300vh] w-full">
+    <div ref={ref} className="relative h-[210vh] w-full">
       <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
         {/* Background haze — drifts in then out */}
         <motion.div
