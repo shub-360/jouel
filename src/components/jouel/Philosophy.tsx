@@ -77,7 +77,11 @@ export function Philosophy() {
                 loading="lazy"
                 className="h-[60vh] w-full object-cover"
               />
+              <div className="light-pass" />
+              <div className="reflection-sweep" />
+              <div className="gem-glint" />
             </div>
+
             <figcaption className="mt-4 flex justify-between text-eyebrow text-foreground/50">
               <span>Plate 01</span>
               <span>The Setting · Atelier, Paris</span>
