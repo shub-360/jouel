@@ -69,14 +69,18 @@ export function CraftScene() {
             transition={{ duration: 1.8, ease }}
             className="col-span-12 md:col-span-5 md:col-start-7"
           >
-            <div className="overflow-hidden rounded-sm">
+            <div className="relative overflow-hidden rounded-sm">
               <img
                 src={craft2}
                 alt="Workshop macro — gold ring sketch"
                 loading="lazy"
                 className="h-[60vh] w-full object-cover opacity-90"
               />
+              <div className="light-pass" />
+              <div className="reflection-sweep" />
+              <div className="gem-glint" />
             </div>
+
             <figcaption className="mt-4 text-eyebrow text-cream/50">
               Atelier reference · Plate 47
             </figcaption>

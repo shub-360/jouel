@@ -113,7 +113,9 @@ export function Hero() {
               }}
             />
             {/* Reflection sweep across the model */}
+            <div className="light-pass" />
             <div className="reflection-sweep" />
+
           </div>
         </motion.div>
       </div>

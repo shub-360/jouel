@@ -237,8 +237,11 @@ function PieceImage({
           loading="lazy"
           className={`${heightClass} w-full object-cover`}
         />
+        <div className="light-pass" />
         <div className="reflection-sweep" />
+        <div className="gem-glint" />
       </div>
+
     </motion.div>
   );
 }
