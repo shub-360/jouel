@@ -30,7 +30,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <LenisProvider>
-      <main className="grain relative min-h-screen w-full overflow-x-hidden bg-background text-foreground">
+      <main className="grain paper-texture relative min-h-screen w-full overflow-x-hidden bg-background text-foreground">
         {/* Global ambient field — keeps whitespace alive between scenes */}
         <div className="ambient-field" aria-hidden />
         <Hero />
