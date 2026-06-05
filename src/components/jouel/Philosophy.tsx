@@ -192,6 +192,8 @@ export function Philosophy() {
           </figcaption>
         </motion.figure>
       </div>
+
+      <FolioMark page="p.02" label="Philosophie" align="left" />
     </section>
   );
 }
