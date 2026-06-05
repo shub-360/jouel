@@ -3,6 +3,8 @@ import { useRef } from "react";
 import c1 from "@/assets/collection-1.jpg";
 import c2 from "@/assets/collection-2.jpg";
 import c3 from "@/assets/collection-3.jpg";
+import { ChapterFolio, FolioMark } from "./ChapterFolio";
+import { MarginNote } from "./MarginNote";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -41,7 +43,7 @@ export function Collection() {
     <section className="relative w-full bg-background">
       <div className="mx-auto max-w-[1400px] px-6 pt-32 md:px-12 md:pt-48">
         <div className="flex items-end justify-between">
-          <span className="text-eyebrow text-foreground/60">Chapter III</span>
+          <ChapterFolio numeral="III" label="Exhibition" align="left" />
           <span className="text-eyebrow text-foreground/40">— The Exhibition</span>
         </div>
         <motion.h2
