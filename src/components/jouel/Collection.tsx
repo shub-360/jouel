@@ -112,6 +112,11 @@ function StickyPiece({
   return (
     <div ref={ref} className="relative h-[210vh] w-full">
       <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
+        {dramatic && (
+          <MarginNote side="left" rotate={-3} className="top-[14%]" delay={0.4}>
+            the light stayed longer here
+          </MarginNote>
+        )}
         {/* Persistent ambient base — never fully fades, ensures no white gap */}
         <div
           className="ambient-drift pointer-events-none absolute inset-0 opacity-60"
