@@ -61,6 +61,10 @@ export function Collection() {
       {pieces.map((p, i) => (
         <StickyPiece key={p.no} piece={p} index={i} />
       ))}
+
+      <div className="relative">
+        <FolioMark page="p.03" label="Exhibition" align="right" />
+      </div>
     </section>
   );
 }
