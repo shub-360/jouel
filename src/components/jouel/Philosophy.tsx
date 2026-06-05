@@ -95,6 +95,9 @@ export function Philosophy() {
             style={{ y: labelY }}
             className="relative col-span-12 md:col-span-5 md:col-start-8 md:pt-32"
           >
+            <MarginNote side="right" rotate={-3} className="-top-6 md:-top-10">
+              held, never displayed
+            </MarginNote>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
