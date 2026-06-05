@@ -62,9 +62,7 @@ export function Collection() {
         <StickyPiece key={p.no} piece={p} index={i} />
       ))}
 
-      <div className="relative">
-        <FolioMark page="p.03" label="Exhibition" align="right" />
-      </div>
+      <FolioMark page="p.03" label="Exhibition" align="right" />
     </section>
   );
 }
