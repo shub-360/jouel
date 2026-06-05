@@ -1,66 +1,91 @@
-## JOUEL — Cinematic Continuity Pass
+# Editorial Storytelling Layer
 
-Four targeted fixes to remove dead scroll, soften the hero model, tighten reveal pacing, and keep atmosphere alive between scenes. No new dependencies, no creative-direction changes.
+Three small, restrained additions that make JOUEL feel like a luxury volume — film, book, and editorial in one.
 
----
+## 1. Chapter folio marks (Roman numerals)
 
-### 1. Collection — kill dead scroll, keep atmosphere alive
+Tiny Roman numerals (I, II, III, IV) that fade in at each scene transition — like page folios in a printed volume.  
+Introduce tiny folio references in bottom corners of major chapters.
 
-**File:** `src/components/jouel/Collection.tsx`
+Examples:
 
-- Reduce sticky height per piece: `h-[300vh]` → `h-[220vh]` so scenes don't outlast their content.
-- Rewrite transform timelines so something is always moving/visible across the full 0→1 range:
-  - `wordOpacity`: `[0, 0.08, 0.92, 1] → [0, 1, 1, 0]` (in earlier, out later)
-  - `imgOpacity`: `[0.05, 0.25, 0.85, 1] → [0, 1, 1, 0]` (image present nearly the whole scene)
-  - `captionOpacity`: `[0.25, 0.4, 0.9, 1] → [0, 1, 1, 0]` (no late entry)
-  - `hazeOpacity`: `[0, 0.15, 0.95, 1] → [0, 0.7, 0.7, 0]` (atmosphere holds full duration)
-- Add a persistent ambient layer behind every sticky piece (very low-opacity gold radial + grain) that never fully fades, so transitions between pieces never go fully blank.
-- Add a continuous slow `y` drift to the jewelry image even at scene midpoint (extend `imgY` range slightly) so nothing feels frozen.
+p.01 — Ouverture
 
-### 2. Hero — soft atmospheric model blend  
-Add extremely subtle atmospheric depth behind the model silhouette using a soft blurred shadow diffusion rather than a standard drop shadow.
+p.02 — Philosophie
 
-The goal is to create cinematic separation from the background while maintaining softness and luxury restraint.
+p.03 — Collection
 
-**File:** `src/components/jouel/Hero.tsx`
+p.04 — Épilogue
 
-- Remove the hard rectangular video edge. Strengthen the existing `mask-image` with a wider, softer radial:
-  - `radial-gradient(ellipse 70% 95% at 50% 55%, black 35%, transparent 95%)`
-  - Add a second vertical fade layer (mask-composite) so the bottom of the model dissolves into cream instead of cutting.
-- Wrap the video in an extra atmospheric layer: a cream→transparent radial overlay sitting on top of the video edges (additive feathering) to diffuse any remaining hard pixels.
-- Keep the giant `JOUEL` wordmark on z-10 and the video on z-20, but lower video contrast at the edges via the mask so type bleeds through the silhouette outline.
-- Confirm `mix-blend-mode: multiply` is NOT introduced (would dirty the cream); rely purely on masking + radial fade.
+Opacity should remain extremely subtle (15–20%) and serve as a printed-volume detail rather than navigation.
 
-### 3. Reveal pacing — anticipatory, not reactive
+- New component: `src/components/jouel/ChapterFolio.tsx`
+  - Props: `numeral` ("I" | "II" | "III" | "IV"), `label` (e.g. "Origin"), optional `align` ("left" | "right")
+  - Rendering: serif italic Roman numeral at ~14–16px, eyebrow label beneath, both at `text-foreground/40`
+  - Animation: framer-motion `whileInView` fade + 8px rise, `once: true`, 1.4s ease — no scroll-tied logic (keeps stability)
+  - Positioned `absolute` top-12 with side alignment, inside each scene's outer wrapper
+- Placement (one per chapter, no duplicates with existing eyebrow text):
+  - Hero → folio "I — Ouverture"
+  - Philosophy → folio "II — Philosophie"
+  - Collection → folio "III — Exhibition"
+  - Story + Finale share "IV — Épilogue" placed in Finale
+- Replace the existing inline "Chapter II / Chapter III" eyebrow lines with the new folio component for consistency
 
-**Files:** `Collection.tsx`, `Philosophy.tsx`, `Story/OriginScene.tsx`, `Story/CraftScene.tsx`, `Story/MemoryScene.tsx`, `Finale.tsx`
+## 2. Letter from the founder
 
-- Standardize `whileInView` viewport margin from `-15%` / `-20%` to `-25%` (top) / `0%` (bottom) so reveals trigger before the element reaches viewport center.
-- Where `useScroll` drives reveals (Collection captions), shift the start of opacity ramps 10–15% earlier (covered in §1).
-- Slightly shorten reveal durations (2.0s → 1.4s) on body text/captions so they finish near focus position, while keeping hero/quote durations long for gravitas.  
-Introduce subtle overlap transitions between exhibition pieces so the next atmosphere begins appearing before the previous scene fully exits.
-  Avoid hard visual separation between collection moments.
+A single quiet serif paragraph placed in the negative space between Philosophy and Collection.
 
-### 4. Atmospheric continuity between scenes
+- New component: `src/components/jouel/FoundersLetter.tsx`
+  - Full-bleed section, generous vertical padding (~`py-40 md:py-56`)
+  - Centered max-w-2xl block
+  - Small eyebrow: "A note — from the atelier"
+  - Body: short serif paragraph (~3 lines), font-display italic-mix, ~clamp(1.25rem, 2vw, 1.75rem), leading-relaxed, `text-foreground/75`
+  - Signature line: handwritten-style script font (Caveat or similar already-loaded fallback to italic serif) — "— From the Atelier"
+    Avoid using a named founder. The voice should feel timeless, anonymous, and house-driven, reinforcing the mythological luxury identity of JOUEL.
+  - Subtle ambient drift: a single soft radial haze behind the text
+  - Word-by-word fade-in on view (mirrors Philosophy pull-quote technique, lighter)
+- Draft copy (final wording confirmable):
+  > "She never wore it for attention. It was inherited from silence — and remembered, years later, only by the way light fell across her wrist."
+- Mounted in src/routes/index.tsx between <Philosophy /> and <Collection />
+  Immediately after the Founder Letter, insert a short cinematic material interlude before Collection begins.
+  This should be a full-width editorial transition featuring:
+  - macro gold texture
+  - gemstone facet detail
+  - silk thread
+  - engraving close-up
+  Use subtle parallax and atmospheric motion only.
+  Purpose:
+  Create a visual breath between the emotional founder note and the exhibition showcase.
+  The transition should feel like turning a page in a luxury volume before entering the Collection chapter.
 
-**Files:** `src/styles.css`, `src/routes/index.tsx` (or a new `AmbientField.tsx` mounted once)
+## 3. Handwritten margin notes
 
-- Add a single fixed-position ambient field behind the entire page: very subtle cream/gold radial gradient + grain at ~6% opacity, `position: fixed; inset: 0; z-index: 0; pointer-events: none;`. Sections sit on transparent or near-transparent backgrounds so the field shows through during transitions.
-- Add a reusable `.ghost-type` utility in `styles.css`: oversized grotesk word, opacity ~0.04, that scenes can drop into their negative space (e.g., faint "ATELIER" / "CRAFT" / "MEMORY" floating in margins) — keeps whitespace emotionally alive without crowding.
-- Add `@keyframes haze-drift` (already partially present as `ambient-drift`) confirmed slow (40s+) and apply to the global field so motion never stops.  
-Atmospheric movement should continue subtly across section boundaries so scenes feel emotionally connected.
-  Light diffusion, haze drift, and background motion should overlap slightly between transitions to create cinematic continuity rather than isolated section changes.
+Tiny script-font fragments that float in negative space at scene edges — like an editor's pencil marks in the margin.
 
----
+- New component: `src/components/jouel/MarginNote.tsx`
+  - Props: `children`, `side` ("left" | "right"), `tone` ("script" | "eyebrow")
+  - Renders as `absolute` positioned text, rotated -2° to 3°, `text-foreground/35`, small (~12–14px)
+  - Script tone: italic display serif (using current font stack — no new font load needed for stability)
+  - Animation: fade + small drift, `whileInView` once, 1.8s ease, slight delay
+- Placement (1–2 per chapter maximum):
+  - Philosophy: right margin near pull quote — "held, never displayed"
+  - Collection: between Piece I and II, left margin — "the light stayed longer here"
+    The note should feel poetic and discovered rather than explanatory.
+  - Finale: above closing line — "with quiet thanks"
 
-### Out of scope
+## Why this works
 
-- No new sections, no copy changes, no image regeneration.
-- No new dependencies. All work in existing components + `styles.css`.
+- No new scroll listeners, no `useScroll` additions → preserves the stabilized cinematic foundation
+- All animations are `whileInView once` → no hydration risk, no animation loops
+- Adds the missing human/emotional register without breaking restraint
+- Folios + letter + margin notes together evoke a printed editorial volume
 
-### Verification
+## Files
 
-- Scroll through Collection: confirm no white gap between pieces, image visible >70% of each sticky duration.
-- Hero: model edges feather into cream, JOUEL letters readable behind silhouette.
-- Reveal triggers: text appears as element enters lower viewport, fully readable at center.
-- Between sections: faint ambient warmth always present, never pure flat white.
+- new: `src/components/jouel/ChapterFolio.tsx`
+- new: `src/components/jouel/FoundersLetter.tsx`
+- new: `src/components/jouel/MarginNote.tsx`
+- edit: `src/routes/index.tsx` (mount FoundersLetter)
+- edit: `src/components/jouel/Hero.tsx`, `Philosophy.tsx`, `Collection.tsx`, `Finale.tsx` (folios + margin notes; replace existing "Chapter X" eyebrows)
+
+No new dependencies. No changes to existing motion or scroll logic.

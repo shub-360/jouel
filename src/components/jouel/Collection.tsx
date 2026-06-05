@@ -3,6 +3,8 @@ import { useRef } from "react";
 import c1 from "@/assets/collection-1.jpg";
 import c2 from "@/assets/collection-2.jpg";
 import c3 from "@/assets/collection-3.jpg";
+import { ChapterFolio, FolioMark } from "./ChapterFolio";
+import { MarginNote } from "./MarginNote";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -41,7 +43,7 @@ export function Collection() {
     <section className="relative w-full bg-background">
       <div className="mx-auto max-w-[1400px] px-6 pt-32 md:px-12 md:pt-48">
         <div className="flex items-end justify-between">
-          <span className="text-eyebrow text-foreground/60">Chapter III</span>
+          <ChapterFolio numeral="III" label="Exhibition" align="left" />
           <span className="text-eyebrow text-foreground/40">— The Exhibition</span>
         </div>
         <motion.h2
@@ -59,6 +61,8 @@ export function Collection() {
       {pieces.map((p, i) => (
         <StickyPiece key={p.no} piece={p} index={i} />
       ))}
+
+      <FolioMark page="p.03" label="Exhibition" align="right" />
     </section>
   );
 }
@@ -108,6 +112,11 @@ function StickyPiece({
   return (
     <div ref={ref} className="relative h-[210vh] w-full">
       <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
+        {dramatic && (
+          <MarginNote side="left" rotate={-3} className="top-[14%]" delay={0.4}>
+            the light stayed longer here
+          </MarginNote>
+        )}
         {/* Persistent ambient base — never fully fades, ensures no white gap */}
         <div
           className="ambient-drift pointer-events-none absolute inset-0 opacity-60"

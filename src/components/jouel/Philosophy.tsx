@@ -3,6 +3,8 @@ import { useRef } from "react";
 import craft1 from "@/assets/craft-1.jpg";
 import craft2 from "@/assets/craft-2.jpg";
 import { SculpturalFragments } from "./SculpturalFragments";
+import { ChapterFolio, FolioMark } from "./ChapterFolio";
+import { MarginNote } from "./MarginNote";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -32,7 +34,7 @@ export function Philosophy() {
           transition={{ duration: 1.4, ease }}
           className="flex items-center justify-between"
         >
-          <span className="text-eyebrow text-foreground/60">Chapter II</span>
+          <ChapterFolio numeral="II" label="Philosophie" align="left" />
           <span className="text-eyebrow text-foreground/40">— Philosophy</span>
         </motion.div>
 
@@ -93,6 +95,9 @@ export function Philosophy() {
             style={{ y: labelY }}
             className="relative col-span-12 md:col-span-5 md:col-start-8 md:pt-32"
           >
+            <MarginNote side="right" rotate={-3} className="-top-6 md:-top-10">
+              held, never displayed
+            </MarginNote>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -187,6 +192,8 @@ export function Philosophy() {
           </figcaption>
         </motion.figure>
       </div>
+
+      <FolioMark page="p.02" label="Philosophie" align="left" />
     </section>
   );
 }

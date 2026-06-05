@@ -5,6 +5,8 @@ import { Philosophy } from "@/components/jouel/Philosophy";
 import { Collection } from "@/components/jouel/Collection";
 import { Story } from "@/components/jouel/Story/index";
 import { Finale } from "@/components/jouel/Finale";
+import { FoundersLetter } from "@/components/jouel/FoundersLetter";
+import { MaterialInterlude } from "@/components/jouel/MaterialInterlude";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -35,6 +37,8 @@ function Index() {
         <div className="ambient-field" aria-hidden />
         <Hero />
         <Philosophy />
+        <FoundersLetter />
+        <MaterialInterlude />
         <Collection />
         <Story />
         <Finale />
