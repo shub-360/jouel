@@ -74,6 +74,8 @@ export function Finale() {
           © MMXXVI · Maison Jouel · Paris
         </span>
       </footer>
+
+      <FolioMark page="p.04" label="Épilogue" align="right" />
     </section>
   );
 }
