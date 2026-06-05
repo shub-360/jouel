@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { FloatingParticles } from "./FloatingParticles";
+import { FolioMark } from "./ChapterFolio";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -171,6 +172,8 @@ export function Hero() {
       >
         scroll
       </motion.div>
+
+      <FolioMark page="p.01" label="Ouverture" align="right" />
     </section>
   );
 }
