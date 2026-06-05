@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { ChapterFolio, FolioMark } from "./ChapterFolio";
+import { MarginNote } from "./MarginNote";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -23,15 +25,13 @@ export function Finale() {
         }}
       />
 
-      <motion.span
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.6, ease }}
-        className="relative text-eyebrow text-foreground/50"
-      >
-        Chapter V — Closing
-      </motion.span>
+      <MarginNote side="right" rotate={2} className="top-[28%]" delay={0.6}>
+        with quiet thanks
+      </MarginNote>
+
+      <div className="relative">
+        <ChapterFolio numeral="IV" label="Épilogue" align="left" />
+      </div>
 
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
