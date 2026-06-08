@@ -61,7 +61,7 @@ export function Philosophy() {
       </div>
 
       {/* Layered archive composition */}
-      <div className="relative mx-auto mt-32 max-w-[1400px] px-6 md:px-12">
+      <div className="relative mx-auto mt-20 max-w-[1400px] px-6 md:mt-24 md:px-12">
         <div className="relative grid grid-cols-12 gap-6">
           {/* Image 1 — top-left, parallax */}
           <motion.figure
