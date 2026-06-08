@@ -93,7 +93,7 @@ export function CraftScene() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 1.6, ease, delay: 0.6 }}
-            className="col-span-12 mt-16 flex flex-wrap gap-4 md:col-span-8 md:col-start-3 md:mt-32"
+            className="col-span-12 mt-12 flex flex-wrap gap-4 md:col-span-8 md:col-start-3 md:mt-20"
           >
             {[
               { label: "18k yellow gold", hint: "warm · ductile" },
