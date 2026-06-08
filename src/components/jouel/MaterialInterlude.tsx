@@ -48,7 +48,7 @@ export function MaterialInterlude() {
           Interlude — Materials
         </motion.span>
 
-        <div className="mt-12 grid grid-cols-12 gap-4 md:gap-6">
+        <div className="mt-10 grid grid-cols-12 gap-4 md:gap-6">
           {plates.map((p, i) => (
             <motion.figure
               key={i}
