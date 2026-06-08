@@ -172,7 +172,7 @@ export function Philosophy() {
           whileInView={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
           viewport={{ once: true, margin: "0px 0px -20% 0px" }}
           transition={{ duration: 1.8, ease, delay: 0.2 }}
-          className="mx-auto mt-40 grid grid-cols-12 gap-6"
+          className="mx-auto mt-24 grid grid-cols-12 gap-6 md:mt-32"
         >
           <div className="relative col-span-12 overflow-hidden rounded-sm md:col-span-6 md:col-start-4">
             <img
