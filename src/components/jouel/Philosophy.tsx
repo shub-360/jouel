@@ -24,7 +24,7 @@ export function Philosophy() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden bg-background py-32 md:py-48"
+      className="relative w-full overflow-hidden bg-background py-20 md:py-32"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-12">
         <motion.div
