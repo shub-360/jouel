@@ -141,7 +141,7 @@ export function Philosophy() {
         {/* Sculptural centerpiece — the iconic moment */}
         <motion.div
           style={{ y: sculptureY }}
-          className="relative mx-auto mt-40 flex max-w-3xl flex-col items-center"
+          className="relative mx-auto mt-24 flex max-w-3xl flex-col items-center md:mt-32"
         >
           <motion.span
             initial={{ opacity: 0 }}
