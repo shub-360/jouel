@@ -6,7 +6,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Finale() {
   return (
-    <section className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-background px-6 py-24">
+    <section className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-background px-6 py-16 md:py-20">
       {/* Ghost typography in negative space */}
       <span
         className="ghost-type pointer-events-none absolute left-1/2 top-[18%] -translate-x-1/2 select-none"
