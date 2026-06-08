@@ -56,7 +56,7 @@ export function FoundersLetter() {
         </motion.span>
 
         <p
-          className="font-display mt-12 leading-relaxed text-foreground/80"
+          className="font-display mt-10 leading-relaxed text-foreground/80"
           style={{ fontSize: "clamp(1.35rem, 2.2vw, 1.9rem)" }}
         >
           {letter.map((w, i) => (
