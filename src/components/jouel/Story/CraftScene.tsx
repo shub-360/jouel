@@ -18,7 +18,7 @@ export function CraftScene() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden bg-charcoal py-32 text-cream md:py-48"
+      className="relative w-full overflow-hidden bg-charcoal py-20 text-cream md:py-32"
     >
       {/* Ambient drift */}
       <div
