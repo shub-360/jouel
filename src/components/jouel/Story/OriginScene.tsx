@@ -77,7 +77,7 @@ export function OriginScene() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 1.6, ease, delay: 0.6 }}
-            className="col-span-12 mt-12 md:col-span-3 md:col-start-1 md:mt-24"
+            className="col-span-12 mt-10 md:col-span-3 md:col-start-1 md:mt-16"
           >
             <div className="rounded-sm border border-foreground/15 bg-card/70 p-5 backdrop-blur-sm">
               <span className="text-eyebrow text-foreground/50">Origin · 1962</span>
