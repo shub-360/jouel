@@ -51,7 +51,7 @@ export function CraftScene() {
           From sketch to <span className="italic text-cream/70">silence</span>.
         </motion.h3>
 
-        <div className="relative mt-24 grid grid-cols-12 gap-6">
+        <div className="relative mt-16 grid grid-cols-12 gap-6 md:mt-20">
           {/* Floating gold sketch (SVG) */}
           <motion.div
             style={{ y: sketchY }}
