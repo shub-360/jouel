@@ -26,7 +26,7 @@ export function MaterialInterlude() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden bg-background py-24 md:py-32"
+      className="relative w-full overflow-hidden bg-background py-16 md:py-24"
       aria-label="Material interlude"
     >
       <div
@@ -48,7 +48,7 @@ export function MaterialInterlude() {
           Interlude — Materials
         </motion.span>
 
-        <div className="mt-12 grid grid-cols-12 gap-4 md:gap-6">
+        <div className="mt-10 grid grid-cols-12 gap-4 md:gap-6">
           {plates.map((p, i) => (
             <motion.figure
               key={i}

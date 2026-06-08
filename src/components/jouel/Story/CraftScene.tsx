@@ -18,7 +18,7 @@ export function CraftScene() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden bg-charcoal py-32 text-cream md:py-48"
+      className="relative w-full overflow-hidden bg-charcoal py-20 text-cream md:py-32"
     >
       {/* Ambient drift */}
       <div
@@ -51,7 +51,7 @@ export function CraftScene() {
           From sketch to <span className="italic text-cream/70">silence</span>.
         </motion.h3>
 
-        <div className="relative mt-24 grid grid-cols-12 gap-6">
+        <div className="relative mt-16 grid grid-cols-12 gap-6 md:mt-20">
           {/* Floating gold sketch (SVG) */}
           <motion.div
             style={{ y: sketchY }}
@@ -93,7 +93,7 @@ export function CraftScene() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "0px 0px -25% 0px" }}
             transition={{ duration: 1.6, ease, delay: 0.6 }}
-            className="col-span-12 mt-16 flex flex-wrap gap-4 md:col-span-8 md:col-start-3 md:mt-32"
+            className="col-span-12 mt-12 flex flex-wrap gap-4 md:col-span-8 md:col-start-3 md:mt-20"
           >
             {[
               { label: "18k yellow gold", hint: "warm · ductile" },

@@ -41,7 +41,7 @@ const pieces = [
 export function Collection() {
   return (
     <section className="relative w-full bg-background">
-      <div className="mx-auto max-w-[1400px] px-6 pt-32 md:px-12 md:pt-48">
+      <div className="mx-auto max-w-[1400px] px-6 pt-20 md:px-12 md:pt-28">
         <div className="flex items-end justify-between">
           <ChapterFolio numeral="III" label="Exhibition" align="left" />
           <span className="text-eyebrow text-foreground/40">— The Exhibition</span>
@@ -51,7 +51,7 @@ export function Collection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "0px 0px -25% 0px" }}
           transition={{ duration: 1.6, ease }}
-          className="font-display mt-10 leading-[0.95] text-foreground"
+          className="font-display mt-8 leading-[0.95] text-foreground"
           style={{ fontSize: "clamp(2.25rem, 5.5vw, 5.5rem)" }}
         >
           Three pieces, <span className="italic text-foreground/60">held in light.</span>

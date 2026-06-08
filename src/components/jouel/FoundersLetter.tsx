@@ -32,7 +32,7 @@ const letter = [
 export function FoundersLetter() {
   return (
     <section
-      className="relative w-full overflow-hidden bg-background py-40 md:py-56"
+      className="relative w-full overflow-hidden bg-background py-24 md:py-36"
       aria-label="A note from the Atelier"
     >
       {/* Soft radial haze */}
@@ -56,7 +56,7 @@ export function FoundersLetter() {
         </motion.span>
 
         <p
-          className="font-display mt-12 leading-relaxed text-foreground/80"
+          className="font-display mt-10 leading-relaxed text-foreground/80"
           style={{ fontSize: "clamp(1.35rem, 2.2vw, 1.9rem)" }}
         >
           {letter.map((w, i) => (
@@ -82,7 +82,7 @@ export function FoundersLetter() {
           whileInView={{ opacity: 1, width: "3rem" }}
           viewport={{ once: true, margin: "0px 0px -20% 0px" }}
           transition={{ duration: 1.6, ease, delay: 1.6 }}
-          className="mt-12 h-px bg-foreground/30"
+          className="mt-10 h-px bg-foreground/30"
         />
 
         <motion.span

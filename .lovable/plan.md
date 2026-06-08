@@ -1,91 +1,67 @@
-# Editorial Storytelling Layer
+# Reduce inactive whitespace between chapters
 
-Three small, restrained additions that make JOUEL feel like a luxury volume — film, book, and editorial in one.
+The cinematic restraint stays. We only tighten the *transitional* whitespace — the inactive zones between sections and between blocks within a section — where the eye currently waits with nothing happening. No sticky-scroll timing, parallax range, or animation duration changes.
 
-## 1. Chapter folio marks (Roman numerals)
+## Targets (where the dead space lives)
 
-Tiny Roman numerals (I, II, III, IV) that fade in at each scene transition — like page folios in a printed volume.  
-Introduce tiny folio references in bottom corners of major chapters.
+```
+Hero
+  ↓  [Philosophy] py-32/48 + mt-32 + mt-40 + mt-40   ← heavy
+  ↓
+FoundersLetter   py-40/56                            ← heaviest
+  ↓
+MaterialInterlude py-24/32
+  ↓
+Collection       pt-32/48
+  ↓
+Story (OriginScene py-32/48 → CraftScene py-32/48 → MemoryScene)
+  ↓
+Finale           py-24 + mt-32 footer
+```
 
-Examples:
+## Edits
 
-p.01 — Ouverture
+**`src/components/jouel/Philosophy.tsx`**
+- Section: `py-32 md:py-48` → `py-20 md:py-32`
+- Archive composition wrapper: `mt-32` → `mt-20 md:mt-24`
+- Sculptural centerpiece: `mt-40` → `mt-24 md:mt-32`
+- Bottom Plate 02 figure: `mt-40` → `mt-24 md:mt-32`
+- Pull-quote: `mt-16` → `mt-12`
 
-p.02 — Philosophie
+**`src/components/jouel/FoundersLetter.tsx`**
+- Section: `py-40 md:py-56` → `py-24 md:py-36` (single biggest reduction; the letter still gets generous negative space, just not a full empty viewport above and below)
+- Letter paragraph: `mt-12` → `mt-10`
+- Signature divider: `mt-12` → `mt-10`
 
-p.03 — Collection
+**`src/components/jouel/MaterialInterlude.tsx`**
+- Section: `py-24 md:py-32` → `py-16 md:py-24`
+- Grid: `mt-12` → `mt-10`
 
-p.04 — Épilogue
+**`src/components/jouel/Collection.tsx`**
+- Header block: `pt-32 md:pt-48` → `pt-20 md:pt-28`
+- Heading: `mt-10` → `mt-8`
+- (Leave the `h-[210vh]` sticky pieces untouched — that's active scroll, not dead space.)
 
-Opacity should remain extremely subtle (15–20%) and serve as a printed-volume detail rather than navigation.
+**`src/components/jouel/Story/OriginScene.tsx`**
+- Section: `py-32 md:py-48` → `py-20 md:py-32`
+- Caption columns: `mt-12 md:mt-24` → `mt-10 md:mt-16`
 
-- New component: `src/components/jouel/ChapterFolio.tsx`
-  - Props: `numeral` ("I" | "II" | "III" | "IV"), `label` (e.g. "Origin"), optional `align` ("left" | "right")
-  - Rendering: serif italic Roman numeral at ~14–16px, eyebrow label beneath, both at `text-foreground/40`
-  - Animation: framer-motion `whileInView` fade + 8px rise, `once: true`, 1.4s ease — no scroll-tied logic (keeps stability)
-  - Positioned `absolute` top-12 with side alignment, inside each scene's outer wrapper
-- Placement (one per chapter, no duplicates with existing eyebrow text):
-  - Hero → folio "I — Ouverture"
-  - Philosophy → folio "II — Philosophie"
-  - Collection → folio "III — Exhibition"
-  - Story + Finale share "IV — Épilogue" placed in Finale
-- Replace the existing inline "Chapter II / Chapter III" eyebrow lines with the new folio component for consistency
+**`src/components/jouel/Story/CraftScene.tsx`**
+- Section: `py-32 md:py-48` → `py-20 md:py-32`
+- Grid: `mt-24` → `mt-16 md:mt-20`
+- Steps row: `mt-16 ... md:mt-32` → `mt-12 ... md:mt-20`
 
-## 2. Letter from the founder
+**`src/components/jouel/Finale.tsx`**
+- Section: `py-24` → `py-16 md:py-20`
+- Footer: `mt-32` → `mt-24`
 
-A single quiet serif paragraph placed in the negative space between Philosophy and Collection.
+## Quiet hydration fix (drive-by)
 
-- New component: `src/components/jouel/FoundersLetter.tsx`
-  - Full-bleed section, generous vertical padding (~`py-40 md:py-56`)
-  - Centered max-w-2xl block
-  - Small eyebrow: "A note — from the atelier"
-  - Body: short serif paragraph (~3 lines), font-display italic-mix, ~clamp(1.25rem, 2vw, 1.75rem), leading-relaxed, `text-foreground/75`
-  - Signature line: handwritten-style script font (Caveat or similar already-loaded fallback to italic serif) — "— From the Atelier"
-    Avoid using a named founder. The voice should feel timeless, anonymous, and house-driven, reinforcing the mythological luxury identity of JOUEL.
-  - Subtle ambient drift: a single soft radial haze behind the text
-  - Word-by-word fade-in on view (mirrors Philosophy pull-quote technique, lighter)
-- Draft copy (final wording confirmable):
-  > "She never wore it for attention. It was inherited from silence — and remembered, years later, only by the way light fell across her wrist."
-- Mounted in src/routes/index.tsx between <Philosophy /> and <Collection />
-  Immediately after the Founder Letter, insert a short cinematic material interlude before Collection begins.
-  This should be a full-width editorial transition featuring:
-  - macro gold texture
-  - gemstone facet detail
-  - silk thread
-  - engraving close-up
-  Use subtle parallax and atmospheric motion only.
-  Purpose:
-  Create a visual breath between the emotional founder note and the exhibition showcase.
-  The transition should feel like turning a page in a luxury volume before entering the Collection chapter.
+`FolioMark` in `ChapterFolio.tsx` renders inside `Collection` as a child of `<section>` but its first `motion.div` initial style produces a SSR/client mismatch (the error log shows it). Switch the wrapper from `motion.div` to `motion.span` with `inline-block` is not needed — the actual cause is the surrounding parent in `Collection` being a flex `<section>` plus `FolioMark` being absolute. The mismatch is between server `style.opacity:0` vs client. Set `style={{ ...explicitStyle, opacity: 0 }}` on initial so SSR/client agree, or render `FolioMark` only after mount. Simplest fix: pass the inline style on the element directly (already done) and add `suppressHydrationWarning` to the FolioMark `motion.div`.
 
-## 3. Handwritten margin notes
+## Not changing
 
-Tiny script-font fragments that float in negative space at scene edges — like an editor's pencil marks in the margin.
-
-- New component: `src/components/jouel/MarginNote.tsx`
-  - Props: `children`, `side` ("left" | "right"), `tone` ("script" | "eyebrow")
-  - Renders as `absolute` positioned text, rotated -2° to 3°, `text-foreground/35`, small (~12–14px)
-  - Script tone: italic display serif (using current font stack — no new font load needed for stability)
-  - Animation: fade + small drift, `whileInView` once, 1.8s ease, slight delay
-- Placement (1–2 per chapter maximum):
-  - Philosophy: right margin near pull quote — "held, never displayed"
-  - Collection: between Piece I and II, left margin — "the light stayed longer here"
-    The note should feel poetic and discovered rather than explanatory.
-  - Finale: above closing line — "with quiet thanks"
-
-## Why this works
-
-- No new scroll listeners, no `useScroll` additions → preserves the stabilized cinematic foundation
-- All animations are `whileInView once` → no hydration risk, no animation loops
-- Adds the missing human/emotional register without breaking restraint
-- Folios + letter + margin notes together evoke a printed editorial volume
-
-## Files
-
-- new: `src/components/jouel/ChapterFolio.tsx`
-- new: `src/components/jouel/FoundersLetter.tsx`
-- new: `src/components/jouel/MarginNote.tsx`
-- edit: `src/routes/index.tsx` (mount FoundersLetter)
-- edit: `src/components/jouel/Hero.tsx`, `Philosophy.tsx`, `Collection.tsx`, `Finale.tsx` (folios + margin notes; replace existing "Chapter X" eyebrows)
-
-No new dependencies. No changes to existing motion or scroll logic.
+- No removal of any section, copy, image, or animation
+- No changes to scroll-driven `useTransform` ranges
+- No changes to sticky scene heights (`h-[210vh]`, `h-[160vh]`)
+- Breathing room around the founder's letter and the sculptural centerpiece is preserved — only the *excess* is trimmed (~30%)

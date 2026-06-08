@@ -24,7 +24,7 @@ export function Philosophy() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden bg-background py-32 md:py-48"
+      className="relative w-full overflow-hidden bg-background py-20 md:py-32"
     >
       <div className="mx-auto max-w-[1400px] px-6 md:px-12">
         <motion.div
@@ -40,7 +40,7 @@ export function Philosophy() {
 
         {/* Pull quote — blur-to-focus, word by word */}
         <h2
-          className="font-display mt-16 leading-[0.95] tracking-tight text-foreground"
+          className="font-display mt-12 leading-[0.95] tracking-tight text-foreground"
           style={{ fontSize: "clamp(2.5rem, 7vw, 7.5rem)" }}
         >
           {quoteWords.map((w, i) => (
@@ -61,7 +61,7 @@ export function Philosophy() {
       </div>
 
       {/* Layered archive composition */}
-      <div className="relative mx-auto mt-32 max-w-[1400px] px-6 md:px-12">
+      <div className="relative mx-auto mt-20 max-w-[1400px] px-6 md:mt-24 md:px-12">
         <div className="relative grid grid-cols-12 gap-6">
           {/* Image 1 — top-left, parallax */}
           <motion.figure
@@ -141,7 +141,7 @@ export function Philosophy() {
         {/* Sculptural centerpiece — the iconic moment */}
         <motion.div
           style={{ y: sculptureY }}
-          className="relative mx-auto mt-40 flex max-w-3xl flex-col items-center"
+          className="relative mx-auto mt-24 flex max-w-3xl flex-col items-center md:mt-32"
         >
           <motion.span
             initial={{ opacity: 0 }}
@@ -172,7 +172,7 @@ export function Philosophy() {
           whileInView={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
           viewport={{ once: true, margin: "0px 0px -20% 0px" }}
           transition={{ duration: 1.8, ease, delay: 0.2 }}
-          className="mx-auto mt-40 grid grid-cols-12 gap-6"
+          className="mx-auto mt-24 grid grid-cols-12 gap-6 md:mt-32"
         >
           <div className="relative col-span-12 overflow-hidden rounded-sm md:col-span-6 md:col-start-4">
             <img
