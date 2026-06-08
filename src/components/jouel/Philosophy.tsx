@@ -40,7 +40,7 @@ export function Philosophy() {
 
         {/* Pull quote — blur-to-focus, word by word */}
         <h2
-          className="font-display mt-16 leading-[0.95] tracking-tight text-foreground"
+          className="font-display mt-12 leading-[0.95] tracking-tight text-foreground"
           style={{ fontSize: "clamp(2.5rem, 7vw, 7.5rem)" }}
         >
           {quoteWords.map((w, i) => (
