@@ -26,7 +26,7 @@ export function MaterialInterlude() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden bg-background py-24 md:py-32"
+      className="relative w-full overflow-hidden bg-background py-16 md:py-24"
       aria-label="Material interlude"
     >
       <div
