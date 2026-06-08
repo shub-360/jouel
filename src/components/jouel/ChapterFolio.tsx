@@ -64,6 +64,7 @@ export function FolioMark({
       whileInView={{ opacity: 0.18 }}
       viewport={{ once: true }}
       transition={{ duration: 1.8, ease }}
+      suppressHydrationWarning
       className={`pointer-events-none absolute bottom-6 select-none font-display italic text-foreground ${
         align === "right" ? "right-6 md:right-12" : "left-6 md:left-12"
       } ${className}`}
