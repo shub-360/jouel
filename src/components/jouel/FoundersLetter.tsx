@@ -82,7 +82,7 @@ export function FoundersLetter() {
           whileInView={{ opacity: 1, width: "3rem" }}
           viewport={{ once: true, margin: "0px 0px -20% 0px" }}
           transition={{ duration: 1.6, ease, delay: 1.6 }}
-          className="mt-12 h-px bg-foreground/30"
+          className="mt-10 h-px bg-foreground/30"
         />
 
         <motion.span
