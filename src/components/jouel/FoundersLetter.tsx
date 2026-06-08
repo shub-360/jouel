@@ -32,7 +32,7 @@ const letter = [
 export function FoundersLetter() {
   return (
     <section
-      className="relative w-full overflow-hidden bg-background py-40 md:py-56"
+      className="relative w-full overflow-hidden bg-background py-24 md:py-36"
       aria-label="A note from the Atelier"
     >
       {/* Soft radial haze */}
